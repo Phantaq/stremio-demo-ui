@@ -1,0 +1,50 @@
+{
+  "name": "stremio-demo-ui",
+  "version": "1.0.0",
+  "description": "Stremio Demo UI built on addon protocol v3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/dev-server.js",
+    "build": "gulp --mainnet",
+    "start-dist": " ( cd dist; PORT=8093 http-server ) ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "angular": "^1.5.11",
+    "angular-ui-router": "^0.4.3",
+    "bootstrap": "^4.0.0",
+    "popper.js": "^1.12.9",
+    "toastr": "^2.1.4"
+  },
+  "development": {
+    "gulp": "^3.9.1",
+    "gulp-pug": "^3.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-latest": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browserify": "^15.0.0",
+    "express": "^4.16.2",
+    "gulp": "^3.9.1",
+    "gulp-add-src": "^0.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-pug": "^3.3.0",
+    "gulp-sourcemaps": "^2.6.3",
+    "gulp-stylus": "^2.7.0",
+    "minimist": "^1.2.0",
+    "nib": "^1.1.2",
+    "pug": "^2.0.0-rc.4",
+    "require-dir": "^0.3.2",
+    "run-sequence": "^2.2.1",
+    "serve-static": "^1.13.1",
+    "stylus": "^0.54.5",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
