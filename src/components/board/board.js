@@ -11,6 +11,8 @@
     // in ms
     var DEBOUNCE_TIME = 200
 
+    var METAHUB_BASE_URL = 'https://images.metahub.space/'
+
     var addonURLs = [
         'https://cinemeta.strem.io/stremioget/stremio/v1',
         'https://channels.strem.io/stremioget/stremio/v1',
@@ -55,6 +57,15 @@
                 $scope.results = aggr.results
                 !$scope.$$phase && $scope.$digest()
             }
+        }
+
+        // TEMP
+        $scope.posterUrl = function(item) {
+            if (! item) return
+                
+            return item.imdb_id ?
+                METAHUB_BASE_URL + 'poster/medium/'+item.imdb_id+'/img'
+                : item.poster
         }
     }
 })();

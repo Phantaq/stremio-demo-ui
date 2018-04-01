@@ -1,5 +1,7 @@
 .row.p-3#board(ng-controller='BoardController as board')
 	.col-xs-12
-		.row(ng-repeat='row in results')
-			h3(ng-bind='row.addon.manifest.name')
+		.row.p-3(ng-repeat='row in results')
+			h3(ng-bind='row.addon.manifest.name + " " + row.type')
+			.col-md-12
+				img.img-thumbnail.float-left(ng-repeat='item in row.response.metas.slice(0,6)', ng-src='{{::posterUrl(item)}}', width='150')
 
