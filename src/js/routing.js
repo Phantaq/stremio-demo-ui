@@ -10,4 +10,15 @@ angular.module('stremioApp')
         }
     })
 
+    $stateProvider.state({
+        name: 'video',
+        url: '/video/:type/:id',
+        params: {
+            type: null,
+            id: null,
+        },
+        views: {
+            main: {templateUrl: 'videoTpl'},
+        }
+    })
 }]);

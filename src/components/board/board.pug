@@ -3,5 +3,13 @@
 		.row.p-3(ng-repeat='row in results')
 			h3(ng-bind='row.addon.manifest.name + " " + row.type')
 			.col-md-12
-				img.img-thumbnail.float-left(ng-repeat='item in row.response.metas.slice(0,6)', ng-src='{{::posterUrl(item)}}', width='150')
+				a(
+					href='#',
+					ng-repeat='item in row.response.metas.slice(0,6) track by item.id',
+					ui-sref='video({ type: item.type, id: item.type == "series" ? item.id+":1:1" : item.id })',
+				)
+					img.img-thumbnail.float-left(
+						ng-src='{{::posterUrl(item)}}',
+						width='150'
+					)
 
