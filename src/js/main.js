@@ -8,6 +8,6 @@ toastr.options.escapeHtml = true
 var app = angular.module('stremioApp', ['ui.router'])
 
 // Constants
-app.run(['$rootScope', '$state', 'user', function ($rootScope, $state) {
+app.run(['$rootScope', '$state', function ($rootScope, $state) {
 
 }])
