@@ -47,7 +47,7 @@
                 t = setTimeout(refreshWithResults, DEBOUNCE_TIME)
             })
 
-            //aggr.on('finished', refreshWithResults)
+            aggr.on('finished', refreshWithResults)
 
             function refreshWithResults() {
                 clearTimeout(t)
