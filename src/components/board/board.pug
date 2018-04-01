@@ -1,2 +1,5 @@
 .row.p-3#board(ng-controller='BoardController as board')
-	h2 Board
+	.col-xs-12
+		.row(ng-repeat='row in results')
+			h3(ng-bind='row.addon.manifest.name')
+
