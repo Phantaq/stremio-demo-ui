@@ -8,6 +8,9 @@
     var aggregators = require('stremio-aggregators')
     var AddonClient = require('stremio-addon-client')
 
+    // in ms
+    var DEBOUNCE_TIME = 200
+
     var addonURLs = [
         'https://cinemeta.strem.io/stremioget/stremio/v1',
         'https://channels.strem.io/stremioget/stremio/v1',
@@ -22,20 +25,36 @@
         Promise.all(addonURLs.map(function(addonURL) {
             return AddonClient.detectFromURL(addonURL)
         }))
-        .then(onAddonsReady)
+        .then(function(resp) {
+            var addons = resp
+                .map(function(x) { return x.addon })
+                .filter(function(x) { return x })
 
-        function onAddonsReady(resp) {
-            var addons = resp.map(function(x) { return x.addon }).filter(function(x) { return x })
+            onAddonsReady(addons)
+        })
+        // @TODO end TODO
+
+        function onAddonsReady(addons) {
             var aggr = aggregators.Catalogs(addons)
+            var t = null
 
-            aggr.on('update', function() {
-                // @TODO
+            $scope.$on('$destroy', function() {
+                clearTimeout(t)
             })
 
-            aggr.on('finished', function() {
+            aggr.on('updated', function() {
+                clearTimeout(t)
+                t = setTimeout(refreshWithResults, DEBOUNCE_TIME)
+            })
+
+            //aggr.on('finished', refreshWithResults)
+
+            function refreshWithResults() {
+                clearTimeout(t)
+
                 $scope.results = aggr.results
                 !$scope.$$phase && $scope.$digest()
-            })
+            }
         }
     }
 })();
