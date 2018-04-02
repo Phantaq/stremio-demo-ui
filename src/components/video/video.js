@@ -11,50 +11,28 @@
     // in ms
     var DEBOUNCE_TIME = 200
 
-    var addonURLs = [
-        'https://cinemeta.strem.io/stremioget/stremio/v1',
-        'https://channels.strem.io/stremioget/stremio/v1',
-        'https://nfxaddon.strem.io/stremioget/stremio/v1',
-        'https://watchhub.strem.io/stremioget/stremio/v1',
-    ]
+    VideoController.$inject = ['$scope', '$stateParams', 'stremio']
 
-    VideoController.$inject = ['$scope', '$stateParams']
+    function VideoController($scope, $stateParams, stremio) {
+        var aggr = aggregators.Streams(stremio.addons, $stateParams.type, $stateParams.id)
+        var t = null
 
-    function VideoController($scope, $stateParams) {
-        // @TODO: this is supposed to use addonStore
-        Promise.all(addonURLs.map(function(addonURL) {
-            return AddonClient.detectFromURL(addonURL)
-        }))
-        .then(function(resp) {
-            var addons = resp
-                .map(function(x) { return x.addon })
-                .filter(function(x) { return x })
-
-            onAddonsReady(addons)
+        $scope.$on('$destroy', function() {
+            clearTimeout(t)
         })
-        // @TODO end TODO
 
-        function onAddonsReady(addons) {
-            var aggr = aggregators.Streams(addons, $stateParams.type, $stateParams.id)
-            var t = null
+        aggr.evs.on('updated', function() {
+            clearTimeout(t)
+            t = setTimeout(refreshWithResults, DEBOUNCE_TIME)
+        })
 
-            $scope.$on('$destroy', function() {
-                clearTimeout(t)
-            })
+        aggr.evs.on('finished', refreshWithResults)
 
-            aggr.on('updated', function() {
-                clearTimeout(t)
-                t = setTimeout(refreshWithResults, DEBOUNCE_TIME)
-            })
+        function refreshWithResults() {
+            clearTimeout(t)
 
-            aggr.on('finished', refreshWithResults)
-
-            function refreshWithResults() {
-                clearTimeout(t)
-
-                $scope.results = aggr.results
-                !$scope.$$phase && $scope.$digest()
-            }
+            $scope.results = aggr.results
+            !$scope.$$phase && $scope.$digest()
         }
     }
 })();

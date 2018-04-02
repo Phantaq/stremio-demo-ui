@@ -13,50 +13,29 @@
 
     var METAHUB_BASE_URL = 'https://images.metahub.space/'
 
-    var addonURLs = [
-        'https://cinemeta.strem.io/stremioget/stremio/v1',
-        'https://channels.strem.io/stremioget/stremio/v1',
-        'https://nfxaddon.strem.io/stremioget/stremio/v1',
-        'https://watchhub.strem.io/stremioget/stremio/v1',
-    ]
+    BoardController.$inject = ['$scope', 'stremio']
 
-    BoardController.$inject = ['$scope']
+    function BoardController($scope, stremio) {
 
-    function BoardController($scope) {
-        // @TODO: this is supposed to use addonStore
-        Promise.all(addonURLs.map(function(addonURL) {
-            return AddonClient.detectFromURL(addonURL)
-        }))
-        .then(function(resp) {
-            var addons = resp
-                .map(function(x) { return x.addon })
-                .filter(function(x) { return x })
+        var aggr = aggregators.Catalogs(stremio.addons)
+        var t = null
 
-            onAddonsReady(addons)
+        $scope.$on('$destroy', function() {
+            clearTimeout(t)
         })
-        // @TODO end TODO
 
-        function onAddonsReady(addons) {
-            var aggr = aggregators.Catalogs(addons)
-            var t = null
+        aggr.evs.on('updated', function() {
+            clearTimeout(t)
+            t = setTimeout(refreshWithResults, DEBOUNCE_TIME)
+        })
 
-            $scope.$on('$destroy', function() {
-                clearTimeout(t)
-            })
+        aggr.evs.on('finished', refreshWithResults)
 
-            aggr.on('updated', function() {
-                clearTimeout(t)
-                t = setTimeout(refreshWithResults, DEBOUNCE_TIME)
-            })
+        function refreshWithResults() {
+            clearTimeout(t)
 
-            aggr.on('finished', refreshWithResults)
-
-            function refreshWithResults() {
-                clearTimeout(t)
-
-                $scope.results = mapResults(aggr.results)
-                !$scope.$$phase && $scope.$digest()
-            }
+            $scope.results = mapResults(aggr.results)
+            !$scope.$$phase && $scope.$digest()
         }
 
         // TEMP
