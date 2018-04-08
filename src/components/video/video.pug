@@ -1,6 +1,6 @@
-.row.p-3#board(ng-controller='VideoController')
+.row.p-3#video(ng-controller='VideoController')
 	.col-xs-12
 		.row.p-3(ng-repeat='row in results')
 			h4(ng-bind='row.addon.manifest.name')
 			.col-md-12
-				div(ng-repeat='stream in row.response.streams') {{::stream.name+' '+stream.title}}
+				div(ng-repeat='stream in row.response.streams') {{::stream.name+' '+stream.title+' '+stream.infoHash}}
