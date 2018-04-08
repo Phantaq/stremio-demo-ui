@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var aggregators = require('stremio-aggregators')
+    var client = require('stremio-addon-client')
 
     angular
         .module('stremioApp')
@@ -10,13 +10,9 @@
     stremioService.$inject = []
 
     function stremioService() {
-        // WARNING: save/load does not make sense here, since this will prob be sync anyway
-        return new aggregators.AddonCollection({
-            save: function() { },
-            load: function(cb) {
-                cb(null, require('sample-addon-store'))
-            }
-        })
+        let col = new client.AddonCollection()
+        col.load(require('sample-addon-store'))
+        return col
     }
 
 })();
