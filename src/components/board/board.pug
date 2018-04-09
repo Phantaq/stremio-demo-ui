@@ -6,7 +6,7 @@
 				a(
 					href='#',
 					ng-repeat='item in row.response.metas.slice(0,6) track by item.id',
-					ui-sref='video({ type: item.type, id: item.type == "series" ? item.id+":1:1" : item.id })',
+					ui-sref='video({ type: item.type, id: item.id })',
 				)
 					img.img-thumbnail.float-left(
 						ng-src='{{::posterUrl(item)}}',

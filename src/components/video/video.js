@@ -14,7 +14,8 @@
     VideoController.$inject = ['$scope', '$stateParams', 'stremio']
 
     function VideoController($scope, $stateParams, stremio) {
-        var aggr = aggregators.Streams(stremio.addons, $stateParams.type, $stateParams.id)
+        var videoId = $stateParams.type == "series" ? $stateParams.id+":1:1" : $stateParams.id
+        var aggr = new aggregators.Streams(stremio.addons, $stateParams.type, videoId)
         var t = null
 
         $scope.$on('$destroy', function() {
@@ -27,6 +28,10 @@
         })
 
         aggr.evs.on('finished', refreshWithResults)
+        
+        aggr.evs.on('err', function(err) {
+            console.error(err)
+        })
 
         function refreshWithResults() {
             clearTimeout(t)
