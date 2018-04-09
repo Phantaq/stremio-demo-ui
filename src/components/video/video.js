@@ -14,6 +14,11 @@
     VideoController.$inject = ['$scope', '$stateParams', 'stremio']
 
     function VideoController($scope, $stateParams, stremio) {
+        var metaAggr = new aggregators.Metas(stremio.addons, $stateParams.type, $stateParams.id)
+        metaAggr.evs.on('viable', function(meta) {
+            console.log(meta)
+        })
+
         var videoId = $stateParams.type == "series" ? $stateParams.id+":1:1" : $stateParams.id
         var aggr = new aggregators.Streams(stremio.addons, $stateParams.type, videoId)
         var t = null
