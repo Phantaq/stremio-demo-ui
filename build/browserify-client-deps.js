@@ -52,9 +52,6 @@ module.exports = function() {
 	b.require('querystring');
 	b.require('buffer');
 
-	// TEMP
-	b.require('./addonStore.json', { expose: 'sample-addon-store' })
-
 	//b.require(config, { expose: 'stremio-config' })
 
 	for (dep in require('../package').dependencies) {

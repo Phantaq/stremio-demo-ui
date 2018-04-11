@@ -11,7 +11,7 @@
 
     function stremioService() {
         let col = new client.AddonCollection()
-        let promises = col.load(require('sample-addon-store'))
+        let promises = col.load(require('stremio-official-addons'))
 
         // Catch errors on trying to update the manifests for those add-ons
         promises.forEach(function(p) {

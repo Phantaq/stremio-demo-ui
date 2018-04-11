@@ -18,6 +18,7 @@
     "popper.js": "^1.12.9",
     "stremio-addon-client": "git+ssh://git@bitbucket.org/stremio/stremio-addon-client.git",
     "stremio-aggregators": "git+ssh://git@bitbucket.org/stremio/stremio-aggregators.git",
+    "stremio-official-addons": "git://github.com/Stremio/stremio-official-addons.git",
     "toastr": "^2.1.4"
   },
   "development": {
