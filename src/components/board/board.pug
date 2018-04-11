@@ -5,7 +5,7 @@
 			.col-md-12
 				a(
 					href='#',
-					ng-repeat='item in row.response.metas.slice(0,6) track by item.id',
+					ng-repeat='item in row.response.metas.slice(0, 6) track by item.id',
 					ui-sref='video({ type: item.type, id: item.id })',
 				)
 					img.img-thumbnail.float-left(

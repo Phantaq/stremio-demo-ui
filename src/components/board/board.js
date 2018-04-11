@@ -20,6 +20,8 @@
         var aggr = aggregators.Catalogs(stremio.addons)
         var t = null
 
+        aggr.run()
+
         $scope.$on('$destroy', function() {
             clearTimeout(t)
         })
