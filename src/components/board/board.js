@@ -56,7 +56,7 @@
         function mapResults(results)
         {
             results.forEach(function(x) {
-                if (Array.isArray(x.response.metas))
+                if (x.response && Array.isArray(x.response.metas))
                     x.response.metas = x.response.metas.map(mapMeta)
             })
             return results
