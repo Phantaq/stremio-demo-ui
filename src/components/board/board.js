@@ -9,7 +9,7 @@
     var AddonClient = require('stremio-addon-client')
 
     // in ms
-    var DEBOUNCE_TIME = 200
+    var DEBOUNCE_TIME = 100
 
     var METAHUB_BASE_URL = 'https://images.metahub.space/'
 
