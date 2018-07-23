@@ -17,7 +17,7 @@
 
     function BoardController($scope, stremio) {
 
-        var aggr = aggregators.Catalogs(stremio.addons)
+        var aggr = aggregators.Catalogs(stremio.getAddons())
         var t = null
 
         aggr.run()
